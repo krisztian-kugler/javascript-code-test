@@ -14,11 +14,9 @@ class GetBookList {
   // This method takes any parameters and merges them properly into the base URL to build the final URL string for the request.
   private generateRequestURL(url: string, params: Object): string {
     url.endsWith("/") ? (url += "?") : (url += "/?");
-    let i: number = 1; // To keep track of the iteration in the loop below.
-    for (let key in Object.keys(params)) {
-      i === 1 ? (url += `${key}=${params[key]}`) : (url += `&${key}=${params[key]}`);
-      i++;
-    }
+    Object.keys(params).forEach((param, i) => {
+      i === 0 ? (url += `${param}=${encodeURI(params[param])}`) : (url += `&${param}=${encodeURI(params[param])}`);
+    });
     return url;
   }
 
